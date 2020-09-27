@@ -1,100 +1,64 @@
-class MergeSort
-{
-   
-    void merge(int arr[], int l, int m, int r)
-    {
-        
-        int n1 = m - l + 1;
-        int n2 = r - m;
- 
-        
-        int L[] = new int [n1];
-        int R[] = new int [n2];
- 
-        
-        for (int i=0; i<n1; ++i)
-            L[i] = arr[l + i];
-        for (int j=0; j<n2; ++j)
-            R[j] = arr[m + 1+ j];
- 
- 
-        
- 
-        
-        int i = 0, j = 0;
- 
-        
-        int k = l;
-        while (i < n1 && j < n2)
-        {
-            if (L[i] <= R[j])
-            {
-                arr[k] = L[i];
-                i++;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Modelo;
+
+/**
+ *
+ * @author 1151504
+ */
+public class MergeSort {
+
+    //Tamaño Array n=fin-ini+1
+    public static void mergeSort(int A[], int ini, int fin) {
+
+        if (ini >= fin) {
+            return;
+        }
+        int m = (int) ((ini + fin) / 2);
+        mergeSort(A, ini, m);
+        mergeSort(A, m + 1, fin);
+        merge(A, ini, m, fin);
+
+    }
+
+    public static void merge(int A[], int ini, int m, int fin) {
+
+        int B[] = new int[fin - ini + 1];
+        int i, j, k;
+        i = ini;
+        j = m + 1;
+        k = 0;
+        while (i <= m && j <= fin) {
+            if (A[i] < A[j]) {
+                B[k] = A[i];
+                i = i + 1;
+            } else {
+                B[k] = A[j];
+                j = j + 1;
             }
-            else
-            {
-                arr[k] = R[j];
-                j++;
-            }
-            k++;
+            k = k + 1;
         }
- 
-        
-        while (i < n1)
-        {
-            arr[k] = L[i];
-            i++;
-            k++;
+        while (i <= m) {
+            B[k] = A[i];
+            i = i + 1;
+            k = k + 1;
         }
- 
-        
-        while (j < n2)
-        {
-            arr[k] = R[j];
-            j++;
-            k++;
+        while (j <= fin) {
+            B[k] = A[j];
+            j = j + 1;
+            k = k + 1;
         }
-    }
- 
-    
-    void sort(int arr[], int l, int r)
-    {
-        if (l < r)
-        {
-            
-            int m = (l+r)/2;
- 
-            
-            sort(arr, l, m);
-            sort(arr , m+1, r);
- 
-           
-            merge(arr, l, m, r);
+        i = ini;
+        k = 0;
+        while (i <= fin) {
+            A[i] = B[k];
+            i = i + 1;
+            k = k + 1;
         }
+
     }
- 
-    
-    static void printArray(int arr[])
-    {
-        int n = arr.length;
-        for (int i=0; i<n; ++i)
-            System.out.print(arr[i] + " ");
-        System.out.println();
-    }
- 
-    
-    public static void main(String args[])
-    {
-        int arr[] = {12, 11, 13, 5, 6, 7};
- 
-        System.out.println("Given Array");
-        printArray(arr);
- 
-        MergeSort ob = new MergeSort();
-        ob.sort(arr, 0, arr.length-1);
- 
-        System.out.println("\nSorted array");
-        printArray(arr);
-    }
+
 }
